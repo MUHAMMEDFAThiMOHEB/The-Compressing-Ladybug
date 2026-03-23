@@ -1,0 +1,6 @@
+1 - design the work flow
+2 - design the digrams
+3 - collect each compressing & archiving tool mechanism and options alone and with tar command
+4 - testing and checking work flow and break points
+5 - customize/enhance the README.md file
+6 - push the project
