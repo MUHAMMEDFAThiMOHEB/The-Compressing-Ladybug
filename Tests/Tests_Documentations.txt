@@ -1,0 +1,10 @@
+This file is an explanation of each test of each phase of the script work flow
+
+- test_input.sh
+
+script to just test the input/target destination that the script will executed on [file/directory]
+it simply check first if user has give an argument on running the script, and if there is not, it asks for one by "read" command
+
+then it's checks if this given input [path] is exist or not
+
+I consider this as phase one "Get the target path"
