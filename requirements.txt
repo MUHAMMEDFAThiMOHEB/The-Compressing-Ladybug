@@ -1,6 +1,8 @@
 1 - design the work flow
 2 - design the digrams
 3 - collect each compressing & archiving tool mechanism and options alone and with tar command
-4 - testing and checking work flow and break points
-5 - customize/enhance the README.md file
-6 - push the project
+4 - applying, phase by phase with each phase test
+5 - testing and checking work flow and break points "Tests folder"
+6 - customize/enhance the README.md file
+7 - publish version 1 of the project
+8 - enhance workflow, options, functions...
