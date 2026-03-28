@@ -6,3 +6,32 @@ What if !!!!
 4 - what if the final destination was an empty directory
 5 - what if the client want's to perform the script only in some files not all existing ones in the path
 6 - what if he wants to dearchive or decompress !!! 
+7 - archive an archived file ????
+
+Functions :-
+
+get_input () --> check if the user have input an argument on the first run and display it
+              if not, ask for one
+
+validate_input () --> check if the given argument is an existing file or directory
+                      if not, return to "get_input ()" and input a valid one
+
+list_functions () --> just display the functions and operations that script provide for user to choose from
+
+diagnose () --> list all files argument or the input
+                so user can check each file that the action will performed on
+                help user to decide to take the action or abort
+
+proceed () --> ask the client for approval, continue or abort
+
+mapping_nut () --> map the selected choose to it's function
+
+archive () --> perform the archiving
+
+compress () --> perform the compressing
+
+archive_compress () --> perform archiving and compressing
+
+another_round () --> after performing, ask the client if he want to perform another action or quit
+
+main () --> combine all function in order and correct work flow

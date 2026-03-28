@@ -11,4 +11,4 @@ the script provides 3 main actions
 the work flow differ for each options, as some options has a direct following action, and another listed another options and tools
 
 ### Script Flowchart ###
-![Flowchart](./Assets/Flowchart.png)
+![Flowchart](./Assets/Flowchart_TCLB.png)
