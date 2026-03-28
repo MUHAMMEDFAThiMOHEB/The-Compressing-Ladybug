@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 23/3/2026
+# Date Modified: 28/3/2026
 
 # Description:-
 #
@@ -17,59 +17,59 @@ echo "This tool used to archive and compressed using client selected tools and o
 echo "BUILDING TESTING ENHANCING PHASE"
 echo " # --------------------------- Test ------------------------ # "
 
-if [ "$@" = "" ]; then
-  read -p "Please, input the target path/file: " target_path
+# Phase one - get the input (destination path), then validate it
+
+if [ $# -ne 0 ]; then # in case user has input an arguement "path"
+  target_path="$1"
 else
-  target_path=$@
+  read -p "Please, Input the target path: " target_path
 fi
 
-echo "Target path = $target_path"
+if [ -e "$target_path" ]; then
+    echo " Target Path exist --> $target_path"
+    echo ""
+  else
+    echo "Path does not exist !!!"
+    echo "Please input a valid path "
+    exit 1
+  fi
+
+# Phase two - List and options for user to choose
 
 PS3="Choose the process: "
-select option in Archive Compress "Archive & Compress";
-do
 
-  echo "${option} ....."
-
-  case "$option" in
-
-    "Archive") 
-               echo "Archiving the target files --> $target_path ....."
-               tar -cvf backup_"$(date +d%-%m-%Y %H-%M-%S)".tar $target_path
-               echo ""
-               echo " --- Finished --- ";;
-
-    "Compress") 
-
-      PS3="Choose Compressing Tool "
-      select C in gzip bzip2 xz;
-      do
-        echo "${C_option} choosen !!!!"
-        case $C in
-          "gzip")
-            gzip $target_path
-            echo "Target file compressed by gzip tool ";;
-          "bzip2")
-            bzip2 $target_path
-            echo "Target file compressed by bzip2 tool ";;
-          "*")
-            echo "invalid option !!!";;
-        esac
-
-      break
-    done;;
-
- 
-
-  "Archive & Compress") 
-    echo "tar command can used with some options in order to do both";;
-   *)
-     echo "Invalid choose !!!";;
-     exit 1
-
-
-esac
+select option in Archive Compress "Archive & Compress"; do
+  echo "" 
+  echo "$option choosen "
+  echo ""
   break
 done
+
+# Phase three - Core Function and it's work flow
+
+# proceeding confirmation function
+
+proceeding () {
+  read -p "Do you want to proceed ? [Y/N]: " choice
+  case "$choise" in
+    Yy)
+      return 0 ;;
+    Nn)
+      return 1 ;; 
+      *)
+      echo "Invalid option !!, Y/y For yes, N/n for no"
+      proceeding ;;
+  esac
+}
+
+case "$option" in
+  Archive)
+    echo " !!! All files in $target_path will be compressed !!! "
+    echo ""
+    lsd -la
+    echo ""
+    proceeding ;;
+    
+  esac
 
 exit 0

@@ -1,0 +1,8 @@
+What if !!!!
+
+1 - what if the client hasn't input any arguments while running the script
+2 - what if it's more than one input
+3 - what if the input is not vaild
+4 - what if the final destination was an empty directory
+5 - what if the client want's to perform the script only in some files not all existing ones in the path
+6 - what if he wants to dearchive or decompress !!! 
