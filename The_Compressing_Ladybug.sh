@@ -51,10 +51,10 @@ done
 
 proceeding () {
   read -p "Do you want to proceed ? [Y/N]: " choice
-  case "$choise" in
-    Yy)
+  case "$choice" in
+    [Yy])
       return 0 ;;
-    Nn)
+    [Nn])
       return 1 ;; 
       *)
       echo "Invalid option !!, Y/y For yes, N/n for no"

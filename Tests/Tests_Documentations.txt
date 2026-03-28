@@ -8,3 +8,16 @@ it simply check first if user has give an argument on running the script, and if
 then it's checks if this given input [path] is exist or not
 
 I consider this as phase one "Get the target path"
+
+-------------------------------------------------------
+
+- test_proceeding.sh
+
+before script executed the main action (archive/compress), it should inform the user first about all files that will be affected
+and list them by "ls" or "lsd" command, in case there are files that user wants to avoid
+
+simply, the function asks the client to input "Y" or "y" if he wants to proceed or "N" or "n" if not
+if the client inputs another letter it will recursively ask the client till gets a vaild input
+that input will be used later in work flow to confirm the function or abort
+
+-------------------------------------------------------
