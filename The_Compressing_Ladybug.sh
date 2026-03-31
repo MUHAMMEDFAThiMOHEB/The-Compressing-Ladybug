@@ -18,38 +18,67 @@ echo "BUILDING TESTING ENHANCING PHASE"
 echo " # --------------------------- Test ------------------------ # "
 
 # Phase one - get the input (destination path), then validate it
+function get_input (){
+  local target_path
 
 if [ $# -ne 0 ]; then # in case user has input an arguement "path"
-  target_path="$1"
+  echo "You have input -> $1 as the target_path"
+  select op in Resume "Add another path" quit; do
+    break
+  done
+  case "$op" in
+    Resume)
+      target_path=$1;;
+    "Add another path")
+      read -p "Input target path: " target_path;;
+    quit)
+      exit 0;;
+    *)
+      echo "Invalid Input !!! try again. "
+      get_input;;
+  esac
+  echo "$target_path"
 else
   read -p "Please, Input the target path: " target_path
+  echo "$target_path"
 fi
+}
 
+function validate_input (){
+  local target_path=$1
 if [ -e "$target_path" ]; then
-    echo " Target Path exist --> $target_path"
+    echo "Target Path exist --> $target_path"
     echo ""
   else
     echo "Path does not exist !!!"
     echo "Please input a valid path "
     exit 1
   fi
-
+}
 # Phase two - List and options for user to choose
+function functions_list () {
+  PS3="Choose the process: "
 
-PS3="Choose the process: "
-
-select option in Archive Compress "Archive & Compress"; do
-  echo "" 
-  echo "$option choosen "
-  echo ""
-  break
-done
-
+  select option in Archive Compress "Archive & Compress" Quit; do
+    case "$option" in
+      Archive|Compress|"Archive & Compress")
+        echo "$option"
+        return
+        ;;
+      Quit)
+        exit 0
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}
 # Phase three - Core Function and it's work flow
 
 # proceeding confirmation function
 
-proceeding () {
+function proceeding () {
   read -p "Do you want to proceed ? [Y/N]: " choice
   case "$choice" in
     [Yy])
@@ -62,14 +91,13 @@ proceeding () {
   esac
 }
 
-case "$option" in
-  Archive)
-    echo " !!! All files in $target_path will be compressed !!! "
-    echo ""
-    lsd -la
-    echo ""
-    proceeding ;;
-    
-  esac
-
+# Main Script's function work flow, where choosed action will be performed
+main (){
+  local varialbe=$1
+  variable=$(get_input "$@")
+  variable=$(validate_input "$variable")
+  functions_list
+  proceeding
+}
+main "$@"
 exit 0
