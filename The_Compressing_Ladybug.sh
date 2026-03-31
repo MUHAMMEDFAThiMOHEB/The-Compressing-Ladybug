@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 28/3/2026
+# Date Modified: 31/3/2026
 
 # Description:-
 #
@@ -12,35 +12,35 @@
 # script provides archiving only, compressing only and both combined if wanted
 
 
-echo "This is a Simulation of a Totol_Compress_Tool or TCT"
-echo "This tool used to archive and compressed using client selected tools and options"
-echo "BUILDING TESTING ENHANCING PHASE"
-echo " # --------------------------- Test ------------------------ # "
+echo " # --------------------------- Under Testing ------------------------ # "
 
 # Phase one - get the input (destination path), then validate it
 function get_input (){
-  local target_path
+  target_path=$@
+  arg_count=$#
 
-if [ $# -ne 0 ]; then # in case user has input an arguement "path"
+if [ $arg_count -ne 0 ]; then # in case input exist
   echo "You have input -> $1 as the target_path"
+  PS3="choose ...."
   select op in Resume "Add another path" quit; do
     break
   done
   case "$op" in
     Resume)
-      target_path=$1;;
+      target_path=$1
+      echo "$target_path";;
     "Add another path")
-      read -p "Input target path: " target_path;;
+      read -p "Input target path: " target_path
+      get_input "$target_path";;
     quit)
       exit 0;;
     *)
       echo "Invalid Input !!! try again. "
       get_input;;
   esac
-  echo "$target_path"
-else
+else # in case input not-exist
   read -p "Please, Input the target path: " target_path
-  echo "$target_path"
+  get_input "$target_path"
 fi
 }
 
@@ -48,12 +48,12 @@ function validate_input (){
   local target_path=$1
 if [ -e "$target_path" ]; then
     echo "Target Path exist --> $target_path"
-    echo ""
+    echo "$target_path"
   else
     echo "Path does not exist !!!"
     echo "Please input a valid path "
-    exit 1
-  fi
+    get_input 
+fi
 }
 # Phase two - List and options for user to choose
 function functions_list () {
@@ -70,8 +70,9 @@ function functions_list () {
         ;;
       *)
         echo "Invalid option"
+        function_list
         ;;
-    esac
+    esac 
   done
 }
 # Phase three - Core Function and it's work flow
@@ -92,12 +93,6 @@ function proceeding () {
 }
 
 # Main Script's function work flow, where choosed action will be performed
-main (){
-  local varialbe=$1
-  variable=$(get_input "$@")
-  variable=$(validate_input "$variable")
-  functions_list
-  proceeding
-}
-main "$@"
+get_input "$@"
+echo "The value returned from get_input function is $target_path"
 exit 0
