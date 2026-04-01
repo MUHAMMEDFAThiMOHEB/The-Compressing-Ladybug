@@ -35,3 +35,19 @@ archive_compress () --> perform archiving and compressing
 another_round () --> after performing, ask the client if he want to perform another action or quit
 
 main () --> combine all function in order and correct work flow
+
+------------------------------------------------------
+Knowlage along side with:-
+
+we can pass values/variables throught a chain of functions in many ways
+
+if the function is interactive (contain read or select commands) we cannot assignt it to a varialbe
+like this var=$(function_name)
+
+we could use global varialbes or pass by referrance or pass by argument
+
+the special parameters ($@ $# $*) are visable and shared inside all functions in the script
+
+the positional parameters for the function referres to it's arguments only
+
+
