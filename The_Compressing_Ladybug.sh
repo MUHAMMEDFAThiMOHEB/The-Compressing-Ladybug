@@ -48,9 +48,6 @@ function get_input() {
   fi
 }
 
-get_input "$1"
-exit 0
-
 function validate_input (){
   local target_path=$1
 if [ -e "$target_path" ]; then
