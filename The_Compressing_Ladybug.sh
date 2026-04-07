@@ -15,34 +15,41 @@
 echo " # --------------------------- Under Testing ------------------------ # "
 
 # Phase one - get the input (destination path), then validate it
-function get_input (){
-  target_path=$@
-  arg_count=$#
+function get_input() {
+  local target_path="$1"
 
-if [ $arg_count -ne 0 ]; then # in case input exist
-  echo "You have input -> $1 as the target_path"
-  PS3="choose ...."
-  select op in Resume "Add another path" quit; do
-    break
-  done
-  case "$op" in
-    Resume)
-      target_path=$1
-      echo "$target_path";;
-    "Add another path")
-      read -p "Input target path: " target_path
-      get_input "$target_path";;
-    quit)
-      exit 0;;
-    *)
-      echo "Invalid Input !!! try again. "
-      get_input;;
-  esac
-else # in case input not-exist
-  read -p "Please, Input the target path: " target_path
-  get_input "$target_path"
-fi
+  if [ $# -gt 0 ]; then
+    echo "You have input -> $target_path as the target_path"
+    PS3="Choose: "
+
+    select op in Resume "Add another path" quit; do
+      case "$op" in
+        Resume)
+          path=$target_path
+          break
+          ;;
+        "Add another path")
+          read -p "Input target path: " target_path
+          get_input "$target_path"
+          ;;
+        quit)
+          exit 0
+          ;;
+        *)
+          echo "Invalid input! Try again."
+          ;;
+      esac
+      break
+    done
+  else
+   local target_path=""
+    read -p "Please, Input the target path: " target_path
+    path=$target_path 
+  fi
 }
+
+get_input "$1"
+exit 0
 
 function validate_input (){
   local target_path=$1
