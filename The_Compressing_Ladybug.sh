@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 7/3/2026
+# Date Modified: 8/3/2026
 
 # Description:-
 #
@@ -46,9 +46,50 @@ function get_input() {
   fi
 }
 
-function main (){
-  get_input "$@"
+# phase two: validate user input
+function validate_input() {
 
+    local isexist=false
+    local isfile=false
+    local isdir=false
+    local isempty=false
+
+    if [ -e "$1" ]; then
+        isexist=true
+    fi
+
+    if [ -d "$1" ]; then
+        isdir=true
+    elif [ -f "$1" ]; then
+        isfile=true
+    fi
+
+    if [ "$isdir" = true ] && [ -z "$(ls -A $1)" ]; then
+        isempty=true
+    fi
+
+    if [ "$isexist" = true ]; then
+        echo "file exists"
+    fi
+    if [ "$isfile" = true ]; then
+        echo "file is a regular file"
+        lsd -l "$1"
+    fi
+    if [ "$isdir" = true ]; then
+        echo "file is a directory"
+        lsd -l "$1"
+    fi
+    if [ "$isdir" = false ] && [ "$isfile" = false ]; then
+        echo "file exist but it's neither regular file nor directory"
+    fi
+    if [ "$isempty" = true ]; then
+        echo "directory is empty, Nothing to compress ....."
+        get_input 
+    fi
 }
+
+get_input "$@"
+validate_input "$path"
+
 
 exit 0
