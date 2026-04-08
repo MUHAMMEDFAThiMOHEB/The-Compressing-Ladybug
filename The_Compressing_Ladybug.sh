@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 31/3/2026
+# Date Modified: 7/3/2026
 
 # Description:-
 #
@@ -11,9 +11,7 @@
 #
 # script provides archiving only, compressing only and both combined if wanted
 
-
-echo " # --------------------------- Under Testing ------------------------ # "
-
+# ---------------------------------------------------------------
 # Phase one - get the input (destination path), then validate it
 function get_input() {
   local target_path="$1"
@@ -48,55 +46,9 @@ function get_input() {
   fi
 }
 
-function validate_input (){
-  local target_path=$1
-if [ -e "$target_path" ]; then
-    echo "Target Path exist --> $target_path"
-    echo "$target_path"
-  else
-    echo "Path does not exist !!!"
-    echo "Please input a valid path "
-    get_input 
-fi
-}
-# Phase two - List and options for user to choose
-function functions_list () {
-  PS3="Choose the process: "
+function main (){
+  get_input "$@"
 
-  select option in Archive Compress "Archive & Compress" Quit; do
-    case "$option" in
-      Archive|Compress|"Archive & Compress")
-        echo "$option"
-        return
-        ;;
-      Quit)
-        exit 0
-        ;;
-      *)
-        echo "Invalid option"
-        function_list
-        ;;
-    esac 
-  done
-}
-# Phase three - Core Function and it's work flow
-
-# proceeding confirmation function
-
-function proceeding () {
-  read -p "Do you want to proceed ? [Y/N]: " choice
-  case "$choice" in
-    [Yy])
-      return 0 ;;
-    [Nn])
-      return 1 ;; 
-      *)
-      echo "Invalid option !!, Y/y For yes, N/n for no"
-      proceeding ;;
-  esac
 }
 
-# Main Script's function work flow, where choosed action will be performed
-get_input "$@"
-echo "The value returned from get_input function is $target_path"
 exit 0
