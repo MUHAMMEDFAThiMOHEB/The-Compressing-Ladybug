@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 8/3/2026
+# Date Modified: 25/4/2026
 
 # Description:-
 #
@@ -88,8 +88,14 @@ function validate_input() {
     fi
 }
 
+function list_cores(){  
+  select fun1 in Archive Compress "Archive & Compress";do
+    break
+  done
+}
+
 get_input "$@"
 validate_input "$path"
-
+list_cores
 
 exit 0
