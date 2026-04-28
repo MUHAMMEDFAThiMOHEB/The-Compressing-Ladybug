@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 25/4/2026
+# Date Modified: 28/4/2026
 
 # Description:-
 #
@@ -42,6 +42,8 @@ function get_input() {
   else
    local target_path=""
     read -p "Please, Input the target path: " target_path
+    echo "Target path = $target_path" 
+    # -- pass by variable, this global varialbe will used as argument in all coming functions
     path=$target_path 
   fi
 }
@@ -73,11 +75,14 @@ function validate_input() {
     fi
     if [ "$isfile" = true ]; then
         echo "file is a regular file"
-        lsd -l "$1"
+        ls "$1"
     fi
     if [ "$isdir" = true ]; then
         echo "file is a directory"
-        lsd -l "$1"
+        echo "Directory content ....."
+        echo " "
+        ls "$1"
+        echo ""
     fi
     if [ "$isdir" = false ] && [ "$isfile" = false ]; then
         echo "file exist but it's neither regular file nor directory"
@@ -88,14 +93,37 @@ function validate_input() {
     fi
 }
 
-function list_cores(){  
-  select fun1 in Archive Compress "Archive & Compress";do
+function list_cores(){ 
+  PS3="Choose Operation --> "
+  select fun1 in Archive Compress "Archive & Compress" quit ;do
     break
   done
 }
 
+function list_compressing(){
+  PS3="Choose Compressing Tool ."
+  select fun2 in gzip bzip2 xz ; do
+    break
+  done
+}
+
+function archive(){
+  echo " Archive Starting ...."
+  read -p "name .tar file {with out .tar} --> " name
+  tar -cvf "$name".tar "$1"
+  echo " # --- File Archived successfully --- # "
+  ls -l "$name".tar
+}
+
+
 get_input "$@"
 validate_input "$path"
 list_cores
-
+if [ $fun1 = "Archive" ]; then
+  archive "$path"
+  exit 0
+else
+  echo "will included later"
+  exit 0
+fi
 exit 0
