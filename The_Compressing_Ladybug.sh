@@ -2,7 +2,7 @@
 #
 # Author: Muhammad Fathy Moheb
 # Date Created: 17/2/2026
-# Date Modified: 28/4/2026
+# Date Modified: 02/05/2026
 
 # Description:-
 #
@@ -95,24 +95,57 @@ function validate_input() {
 
 function list_cores(){ 
   PS3="Choose Operation --> "
+  local fun1
   select fun1 in Archive Compress "Archive & Compress" quit ;do
     break
   done
+  op1="$fun1"
 }
 
 function list_compressing(){
   PS3="Choose Compressing Tool ."
+  local fun2
   select fun2 in gzip bzip2 xz ; do
     break
   done
+  op2="$fun2"
 }
 
+function archive_compress_list(){
+  echo""
+  echo "compressing can be achive a long side with archiving" 
+  echo "by just adding the right option for the wanted compressing tool"
+  PS3="Choose wanted archiving and compressing mechanizm"
+  local fun3
+  select fun3 in "tar + gzip" "tar + bzip2" "tar + xz" zip; do
+    break
+  done
+  op3="$fun3"
+}
 function archive(){
-  echo " Archive Starting ...."
+  echo "# ----- Archive Starting ----- # "
   read -p "name .tar file {with out .tar} --> " name
   tar -cvf "$name".tar "$1"
   echo " # --- File Archived successfully --- # "
   ls -l "$name".tar
+}
+
+function cgz(){
+  echo " # ----- Compressing using gzip ----- # " 
+  gzip "$1"
+  echo " # --- Done --- # "
+}
+
+function cbz(){
+  echo " # ----- Compressing using bzip2 ----- # "
+  bzip2 "$1"
+  echo " # --- Done --- # "
+}
+
+function cxz(){
+  echo " # ----- Compressing using xz ----- # "
+  xz "$1"
+  echo " # --- Done --- # "
 }
 
 
